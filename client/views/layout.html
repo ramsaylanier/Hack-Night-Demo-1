@@ -1,0 +1,66 @@
+<template name="layout">
+	<header class="header">
+	{{>loginButtons}}
+	</header>
+
+	<div class="main">
+	{{> yield}}
+	</div>	
+
+
+</template>
+
+
+
+<template name="roomList">
+	<h1>Rooms</h1>
+
+	{{#if currentUser}}
+		{{>newRoomForm}}
+
+		{{#if rooms}}
+			{{#each rooms}}
+				{{>roomListSingle}}
+			{{/each}}
+		{{else}}
+			<p>There are no rooms</p>
+		{{/if}}
+	{{else}}
+		<p>please login to see list</p>
+	{{/if}}
+
+</template>	
+
+<template name="newRoomForm">
+	<form name="new-room-form" class="new-room-form">
+	<input type="text" name="room-name-field" class="form-field"/>
+	<input type="submit"/>
+</form>
+</template>	
+
+<template name="roomListSingle">
+	<h1>
+		<a href="{{pathFor route='show.room'}}">{{roomName}}</a>
+	</h1>
+</template>
+
+<template name="showRoom">
+	<h1>{{roomName}}</h1>
+
+	{{>messageForm}}
+
+	{{#if messages}}
+		{{#each messages}}
+			<p>{{message}} - <span class="{{#if isCurrentUser}} green {{/if}}">{{user}}</span></p>
+		{{/each}}
+	{{else}}
+		<p>There are no Messages.</p>
+	{{/if}}
+</template>
+
+<template name="messageForm">
+	<form class="message-form">
+		<input type="text" name="new-message-field">
+		<input type="submit" >
+	</form>
+</template>
